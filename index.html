@@ -13,6 +13,7 @@
             --fondo-paneles: rgba(0, 0, 0, 0.96);
             --fondo-tarjetas: rgba(255, 255, 255, 0.92);
             --color-primario: #e91e63;
+            --dorado: #D4AF37;
         }
 
         body {
@@ -25,14 +26,12 @@
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 5%; position: sticky; top: 0;
-            background: rgba(0,0,0,0.9); z-index: 100;
+            background: rgba(0,0,0,0.9); z-index: 1000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .logo { font-family: var(--fuente-logo); font-size: 2.3rem; margin: 0; cursor: pointer; color: #fff; }
-
         .iconos-header { display: flex; gap: 15px; align-items: center; }
-
         .gift-icon, .cart-icon { font-size: 24px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; position: relative; }
         
         .cart-count {
@@ -48,55 +47,64 @@
             color: #fff; outline: none; font-size: 1rem;
         }
 
+        /* --- NUEVO: CARRUSEL DE INICIO --- */
+        .carousel-wrapper {
+            width: 90%; max-width: 1000px; margin: 20px auto;
+            position: relative; overflow: hidden; border-radius: 15px;
+            border: 1px solid rgba(255,215,0,0.3); height: 350px;
+        }
+        .carousel-slide {
+            display: none; width: 100%; height: 100%; position: relative; animation: fade 1s;
+        }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+        .brand-tag {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.8); color: var(--dorado); padding: 8px 25px;
+            font-weight: bold; border: 1px solid var(--dorado); text-transform: uppercase; letter-spacing: 2px;
+        }
+        @keyframes fade { from {opacity: 0.4} to {opacity: 1} }
+
+        /* Títulos de Sección */
+        .titulo-seccion { 
+            text-align: center; color: var(--dorado); font-size: 1.8rem; 
+            margin: 40px 0 10px; text-transform: uppercase; letter-spacing: 3px;
+        }
+
         /* Catálogo */
         .contenedor-productos {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; padding: 30px 5%;
+            gap: 25px; padding: 10px 5% 40px 5%;
         }
 
         .producto {
             background: var(--fondo-tarjetas); padding: 15px; text-align: center; border-radius: 15px; color: #000;
             transition: 0.3s;
         }
-
-        /* Imagen con efecto de lupa al pasar el mouse */
-        .producto img { 
-            width: 100%; border-radius: 10px; cursor: zoom-in; 
-            transition: 0.3s; object-fit: cover; aspect-ratio: 1/1;
-        }
-        .producto img:hover { opacity: 0.85; }
-
+        .producto img { width: 100%; border-radius: 10px; cursor: zoom-in; transition: 0.3s; object-fit: cover; aspect-ratio: 1/1; }
         .marca { font-weight: bold; font-size: 0.7rem; text-transform: uppercase; color: #777; margin-top: 10px; display: block; }
         .desc-prod { font-size: 1rem; margin: 5px 0; font-weight: 600; }
         .precio { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: block; }
 
-        /* Botones */
         .botones-accion { display: flex; flex-direction: column; gap: 8px; }
         .btn-directo { background: #25d366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
         .btn-carrito { background: #000; color: #fff; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
-        /* MODAL DE IMAGEN GRANDE (Lightbox) */
+        /* Modales */
         #modalImagen {
             display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); align-items: center; justify-content: center; backdrop-filter: blur(8px);
         }
-        #imgExpandida { max-width: 90%; max-height: 85%; border-radius: 10px; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
-        .cerrar-modal { position: absolute; top: 20px; right: 30px; font-size: 50px; color: #fff; cursor: pointer; font-weight: bold; }
+        #imgExpandida { max-width: 90%; max-height: 85%; border-radius: 10px; }
+        .cerrar-modal { position: absolute; top: 20px; right: 30px; font-size: 50px; color: #fff; cursor: pointer; }
 
-        /* Otros Modales y Paneles */
-        .modal, .panel { 
-            display: none; position: fixed; z-index: 2000; height: 100%; background: var(--fondo-paneles); 
+        .panel { 
+            display: block; position: fixed; z-index: 2000; height: 100%; background: var(--fondo-paneles); 
             transition: 0.4s; top: 0; right: 0; width: 0; overflow-x: hidden; 
         }
-        .modal-regalo { 
-            display: none; position: fixed; z-index: 2500; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.8); align-items: center; justify-content: center; 
-        }
-        .modal-content { background: #fff; padding: 30px; border-radius: 20px; text-align: center; max-width: 300px; color: #000; }
 
         @media (max-width: 600px) {
-            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; }
-            .logo { font-size: 1.8rem; }
+            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
+            .carousel-wrapper { height: 250px; }
         }
     </style>
 </head>
@@ -117,42 +125,60 @@
         <input type="text" id="buscador" placeholder="Busca marca o estilo..." onkeyup="buscar()">
     </div>
 
+    <div class="carousel-wrapper">
+        <div class="carousel-slide">
+            <img src="https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg" alt="Camisetas">
+            <div class="brand-tag">NUEVA COLECCIÓN CAMISETAS</div>
+        </div>
+        <div class="carousel-slide">
+            <img src="https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg" alt="Marcas">
+            <div class="brand-tag">LO MEJOR EN STREETWEAR</div>
+        </div>
+    </div>
+
+    <h2 class="titulo-seccion">Camisetas</h2>
+    <div class="contenedor-productos" id="lista-productos"></div>
+
+    <h2 class="titulo-seccion">Gorras</h2>
+    <div class="contenedor-productos" id="lista-gorras">
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">
+            <p>Esperando nuevas existencias de gorras...</p>
+        </div>
+    </div>
+
     <div id="modalImagen" onclick="cerrarImagen()">
         <span class="cerrar-modal">&times;</span>
         <img id="imgExpandida">
     </div>
 
-    <div id="modalRegalo" class="modal-regalo" style="display:none;">
-        <div class="modal-content">
-            <h3 style="margin-top:0;">¡Tu Regalo! 🎁</h3>
-            <p>Email para recibir un 10% de descuento:</p>
-            <input type="email" id="emailRegalo" placeholder="Tu correo" style="width:90%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;">
+    <div id="modalRegalo" class="modal-regalo" style="display:none; position:fixed; z-index:2500; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
+        <div style="background:#fff; padding:30px; border-radius:20px; text-align:center; max-width:300px; color:#000;">
+            <h3>¡Tu Regalo! 🎁</h3>
+            <input type="email" id="emailRegalo" placeholder="Tu correo" style="width:90%; padding:10px; margin-bottom:10px;">
             <button class="btn-carrito" style="width:100%;" onclick="generarCodigo()">Obtener Código</button>
             <div id="resCod" style="margin-top:15px; font-weight:bold; color:var(--color-primario); display:none;"></div>
             <p onclick="toggleModal('modalRegalo', false)" style="cursor:pointer; text-decoration:underline; font-size:0.8rem; margin-top:15px;">Cerrar</p>
         </div>
     </div>
 
-    <div id="panelMenu" class="panel" style="display:block;">
-        <span onclick="cerrarPanel('panelMenu')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer;">&times;</span>
-        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333;">Marcas</h2>
+    <div id="panelMenu" class="panel">
+        <span onclick="cerrarPanel('panelMenu')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer; color:#fff;">&times;</span>
+        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333; color:#fff;">Marcas</h2>
         <a href="#" onclick="filtrar('todos')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">TODAS</a>
         <a href="#" onclick="filtrar('clemont')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">CLEMONT</a>
         <a href="#" onclick="filtrar('lacoste')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">LACOSTE</a>
         <a href="#" onclick="filtrar('essentials')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">ESSENTIALS</a>
         <a href="#" onclick="filtrar('hugo')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">HUGO BOSS</a>
-        <a href="#" onclick="filtrar('prada')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">PRADA</a>
+        <a href="#" onclick="filtrar('monastery')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">MONASTERY</a>
     </div>
 
-    <div id="panelCarrito" class="panel" style="display:block;">
-        <span onclick="cerrarPanel('panelCarrito')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer;">&times;</span>
-        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333;">Carrito</h2>
+    <div id="panelCarrito" class="panel">
+        <span onclick="cerrarPanel('panelCarrito')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer; color:#fff;">&times;</span>
+        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333; color:#fff;">Carrito</h2>
         <div id="items-carrito"></div>
-        <div style="padding:25px; font-weight:bold; font-size:1.3rem;">Total: $<span id="total-precio">0</span></div>
+        <div style="padding:25px; font-weight:bold; font-size:1.3rem; color:#fff;">Total: $<span id="total-precio">0</span></div>
         <button class="btn-carrito" style="margin:0 25px; width:calc(100% - 50px); background:var(--color-primario);" onclick="enviarPedido()">Finalizar Pedido</button>
     </div>
-
-    <div class="contenedor-productos" id="lista-productos"></div>
 
     <script>
         const nroWhatsApp = "573018942801";
@@ -178,13 +204,21 @@
             { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        // FUNCIONES DE IMAGEN GRANDE
-        function verImagen(url) {
-            document.getElementById('imgExpandida').src = url;
-            document.getElementById('modalImagen').style.display = 'flex';
+        // LÓGICA CARRUSEL
+        let slideIndex = 0;
+        function autoSlide() {
+            let slides = document.getElementsByClassName("carousel-slide");
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(autoSlide, 4000);
         }
-        function cerrarImagen() { document.getElementById('modalImagen').style.display = 'none'; }
+        autoSlide();
 
+        // FUNCIONES DE TU CÓDIGO ORIGINAL
+        function verImagen(url) { document.getElementById('imgExpandida').src = url; document.getElementById('modalImagen').style.display = 'flex'; }
+        function cerrarImagen() { document.getElementById('modalImagen').style.display = 'none'; }
         function abrirPanel(id) { document.getElementById(id).style.width = window.innerWidth > 600 ? "350px" : "100%"; }
         function cerrarPanel(id) { document.getElementById(id).style.width = "0"; }
         function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
@@ -209,7 +243,7 @@
                 const wa = `https://wa.me/${nroWhatsApp}?text=Hola, quiero la Camiseta ${encodeURIComponent(p.desc)}`;
                 c.innerHTML += `
                     <div class="producto">
-                        <img src="${p.img}" onclick="verImagen('${p.img}')" title="Clic para ampliar">
+                        <img src="${p.img}" onclick="verImagen('${p.img}')">
                         <span class="marca">${p.marca}</span>
                         <div class="desc-prod">${p.desc}</div>
                         <span class="precio">$89.990</span>
@@ -217,8 +251,7 @@
                             <a href="${wa}" target="_blank" class="btn-directo">WhatsApp Directo</a>
                             <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">Añadir al Carrito</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
@@ -246,6 +279,7 @@
         }
 
         function eliminar(idx) { carrito.splice(idx,1); actualizarCarrito(); }
+        function filtrar(m) { cerrarPanel('panelMenu'); mostrarProductos(m==='todos'?productos:productos.filter(p=>p.marca===m)); }
 
         function enviarPedido() {
             if(carrito.length === 0) return alert("Carrito vacío");
@@ -254,8 +288,6 @@
             m += `Total: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
             window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(m)}`);
         }
-
-        function filtrar(m) { cerrarPanel('panelMenu'); mostrarProductos(m==='todos'?productos:productos.filter(p=>p.marca===m)); }
 
         mostrarProductos(productos);
     </script>

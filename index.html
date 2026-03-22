@@ -3,88 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Colección Premium</title>
+    <title>MDCLTS - Colección Urbana</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-fondo: #ffffff;
-            --color-texto: #000000;
+            /* LINK DE FONDO APLICADO AQUÍ */
+            --color-fondo-imagen: url('https://i.ibb.co/zVXX6fvF/file-00000000f9c471f5a15978499809ab55.png');
+            --color-texto: #ffffff; /* Texto blanco para que resalte sobre el fondo oscuro */
             --fuente-logo: 'Dancing Script', cursive;
             --fuente-cuerpo: 'Inter', sans-serif;
+            --fondo-paneles: rgba(20, 20, 20, 0.95); /* Fondo oscuro transparente para menús */
+            --fondo-tarjetas: rgba(255, 255, 255, 0.9); /* Tarjetas blancas semi-transparentes */
         }
 
         body {
             margin: 0; padding: 0;
-            background-color: var(--color-fondo);
-            background-size: cover; background-attachment: fixed; background-position: center;
-            color: var(--color-texto); font-family: var(--fuente-cuerpo);
+            background-image: var(--color-fondo-imagen);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--color-texto);
+            font-family: var(--fuente-cuerpo);
         }
 
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; position: sticky; top: 0; background: rgba(255,255,255,0.98); z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 10px 5%; position: sticky; top: 0;
+            background: rgba(0,0,0,0.85); /* Header oscuro para que resalten los iconos */
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .logo { font-family: var(--fuente-logo); font-size: 2.2rem; margin: 0; cursor: pointer; }
+        .logo { font-family: var(--fuente-logo); font-size: 2.5rem; margin: 0; cursor: pointer; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
         .iconos-header { display: flex; gap: 15px; align-items: center; }
 
-        /* Icono de Regalo */
-        .gift-icon { font-size: 24px; cursor: pointer; background: #fdf2f2; padding: 8px; border-radius: 50%; border: 1px solid #fee2e2; }
-
-        .cart-icon { position: relative; cursor: pointer; font-size: 24px; background: #f0f0f0; padding: 8px; border-radius: 50%; }
+        /* Iconos con fondo sutil */
+        .gift-icon { font-size: 26px; cursor: pointer; background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 50%; color: #fff; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 26px; background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 50%; color: #fff; }
+        
         .cart-count {
-            position: absolute; top: -5px; right: -5px; background: #000;
-            color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; font-weight: bold;
+            position: absolute; top: -5px; right: -5px; background: #e91e63; /* Color vibrante para el contador */
+            color: white; font-size: 11px; padding: 3px 7px; border-radius: 50%; font-weight: bold;
         }
 
-        /* Buscador */
-        .search-container { padding: 20px 5% 0 5%; text-align: center; }
+        /* Buscador estilizado */
+        .search-container { padding: 25px 5% 5px 5%; text-align: center; }
         #buscador {
-            width: 100%; max-width: 400px; padding: 12px; border-radius: 25px;
-            border: 1px solid #ddd; outline: none; font-size: 0.9rem;
+            width: 100%; max-width: 450px; padding: 14px 20px; border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            outline: none;
+            font-size: 1rem;
+            transition: 0.3s;
         }
+        #buscador:focus { border-color: #fff; background: rgba(0,0,0,0.8); }
+        #buscador::placeholder { color: rgba(255,255,255,0.6); }
 
         /* Modal Regalo */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.8); align-items: center; justify-content: center; backdrop-filter: blur(5px);
         }
         .modal-content {
-            background: white; padding: 30px; border-radius: 15px; text-align: center;
-            max-width: 300px; width: 90%; position: relative;
+            background: #fff; padding: 35px; border-radius: 20px; text-align: center;
+            max-width: 320px; width: 90%; position: relative; color: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Paneles Laterales */
+        /* Paneles Laterales (Menú y Carrito) */
         .panel {
             height: 100%; width: 0; position: fixed; z-index: 1001; top: 0; right: 0;
-            background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 60px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            background-color: var(--fondo-paneles);
+            overflow-x: hidden; transition: 0.4s; padding-top: 70px;
+            box-shadow: -10px 0 20px rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
         }
 
-        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; font-size: 0.85rem; font-weight: bold; }
-        .close-btn { position: absolute; top: 10px; left: 20px; font-size: 30px; cursor: pointer; }
+        .panel a, .panel h2 { padding: 18px 30px; text-decoration: none; color: #fff; display: block; text-transform: uppercase; font-size: 0.9rem; font-weight: bold; letter-spacing: 1.5px; }
+        .panel a:hover { background: rgba(255,255,255,0.05); }
+        .close-btn { position: absolute; top: 15px; left: 25px; font-size: 35px; cursor: pointer; color: #fff; }
 
         /* Catálogo */
         .contenedor-productos {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; padding: 30px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 30px; padding: 40px 5%;
         }
 
-        .producto { background: #fff; border: 1px solid #eee; padding: 15px; text-align: center; border-radius: 12px; }
-        .producto img { width: 100%; border-radius: 8px; }
-        .marca { font-weight: bold; font-size: 0.7rem; text-transform: uppercase; color: #888; display: block; margin-top: 10px; }
-        .desc-prod { font-size: 0.95rem; margin: 5px 0; }
-        .precio { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; display: block; }
+        .producto {
+            background: var(--fondo-tarjetas);
+            padding: 18px; text-align: center; border-radius: 15px; color: #000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .producto:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
 
-        /* Botones */
-        .btn-directo { background-color: #25d366; color: white; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px; }
-        .btn-carrito { background-color: #000; color: #fff; padding: 10px; border-radius: 6px; width: 100%; border: none; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+        .producto img { width: 100%; border-radius: 10px; margin-bottom: 10px; object-fit: cover; aspect-ratio: 1/1; }
+        .marca { font-weight: bold; font-size: 0.75rem; text-transform: uppercase; color: #666; display: block; margin-top: 8px; }
+        .desc-prod { font-size: 1.05rem; margin: 6px 0; font-weight: 500; }
+        .precio { font-size: 1.25rem; font-weight: 700; margin-bottom: 18px; display: block; color: #000; }
 
-        .btn-finalizar { background-color: #000; color: white; text-align: center; padding: 15px; margin: 20px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold; }
+        /* Botones de Acción */
+        .botones-accion { display: flex; flex-direction: column; gap: 8px; }
 
-        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; } }
+        .btn-directo {
+            background-color: #25d366; color: white; padding: 12px; border-radius: 8px;
+            text-decoration: none; font-weight: bold; font-size: 0.85rem; display: block;
+            border: none; text-transform: uppercase; letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        .btn-directo:hover { background-color: #1ebe57; }
+
+        .btn-carrito {
+            background-color: #000; color: #fff; padding: 12px; border-radius: 8px;
+            width: 100%; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        .btn-carrito:hover { background-color: #333; }
+
+        /* Carrito Interior */
+        .item-carrito { display: flex; align-items: center; padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; color: #fff; }
+        .item-carrito img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+        .total-container { padding: 25px; font-weight: bold; font-size: 1.4rem; color: #fff; }
+        .btn-finalizar {
+            background-color: #e91e63; color: white; text-align: center; padding: 18px;
+            margin: 25px; border-radius: 10px; text-decoration: none; display: block; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; }
+            .logo { font-size: 2rem; }
+            #buscador { padding: 10px 15px; font-size: 0.9rem; }
+            .panel { width: 0; max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -96,7 +150,7 @@
             <div class="cart-icon" onclick="abrirPanel('panelCarrito')">
                 🛒 <span class="cart-count" id="contador">0</span>
             </div>
-            <div style="font-size: 28px; cursor: pointer;" onclick="abrirPanel('panelMenu')">&#9776;</div>
+            <div style="font-size: 30px; cursor: pointer; color:#fff;" onclick="abrirPanel('panelMenu')">&#9776;</div>
         </div>
     </header>
 
@@ -106,19 +160,19 @@
 
     <div id="modalRegalo" class="modal">
         <div class="modal-content">
-            <span class="close-btn" style="left: auto; right: 15px; top: 5px;" onclick="cerrarRegalo()">&times;</span>
-            <h3>¡Descuento de Regalo! 🎁</h3>
-            <p style="font-size: 0.9rem;">Ingresa tu correo para recibir un código del 10% en tu primera compra.</p>
-            <input type="email" id="emailRegalo" placeholder="Tu correo aquí" style="width: 80%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;">
-            <button class="btn-carrito" onclick="generarCodigo()">Obtener Código</button>
-            <div id="resultadoCodigo" style="margin-top: 15px; font-weight: bold; color: #d946ef; display: none;"></div>
+            <span class="close-btn" style="color:#000; left: auto; right: 15px; top: 10px; font-size:28px;" onclick="cerrarRegalo()">&times;</span>
+            <h3 style="margin-top:0;">¡Descuento de Regalo! 🎁</h3>
+            <p style="font-size: 0.95rem; color:#555;">Ingresa tu correo para recibir un código aleatorio del 10% en tu pedido.</p>
+            <input type="email" id="emailRegalo" placeholder="Tu correo electrónico" style="width: 85%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; outline:none;">
+            <button class="btn-carrito" style="width:90%;" onclick="generarCodigo()">Obtener mi Código</button>
+            <div id="resultadoCodigo" style="margin-top: 18px; font-weight: bold; color: #e91e63; display: none; font-size:1.1rem; background:#fdf2f2; padding:10px; border-radius:5px;"></div>
         </div>
     </div>
 
     <div id="panelMenu" class="panel">
         <span class="close-btn" onclick="cerrarPanel('panelMenu')">&times;</span>
-        <h2>Marcas</h2>
-        <a onclick="filtrar('todos')">Todas</a>
+        <h2 style="border-bottom: 1px solid rgba(255,255,255,0.1);">Categorías</h2>
+        <a onclick="filtrar('todos')">Todas las Prendas</a>
         <a onclick="filtrar('clemont')">Clemont</a>
         <a onclick="filtrar('lacoste')">Lacoste</a>
         <a onclick="filtrar('essentials')">Essentials</a>
@@ -129,9 +183,9 @@
 
     <div id="panelCarrito" class="panel">
         <span class="close-btn" onclick="cerrarPanel('panelCarrito')">&times;</span>
-        <h2>Tu Pedido</h2>
+        <h2 style="border-bottom: 1px solid rgba(255,255,255,0.1);">Tu Pedido</h2>
         <div id="items-carrito"></div>
-        <div style="padding: 20px; font-weight: bold;">Total: $<span id="total-precio">0</span></div>
+        <div class="total-container">Total: $<span id="total-precio">0</span></div>
         <a href="#" class="btn-finalizar" onclick="enviarPedido()">Finalizar en WhatsApp</a>
     </div>
 
@@ -161,7 +215,7 @@
             { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        function abrirPanel(id) { document.getElementById(id).style.width = "300px"; }
+        function abrirPanel(id) { document.getElementById(id).style.width = window.innerWidth > 600 ? "350px" : "100%"; }
         function cerrarPanel(id) { document.getElementById(id).style.width = "0"; }
 
         function mostrarRegalo() { document.getElementById('modalRegalo').style.display = 'flex'; }
@@ -169,10 +223,12 @@
 
         function generarCodigo() {
             const email = document.getElementById('emailRegalo').value;
-            if(!email.includes('@')) return alert("Ingresa un correo válido");
+            if(!email.includes('@')) return alert("Por favor, ingresa un correo electrónico válido.");
             const codigo = "MDCLTS-" + Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('resultadoCodigo').innerText = "Tu Código: " + codigo;
-            document.getElementById('resultadoCodigo').style.display = 'block';
+            const res = document.getElementById('resultadoCodigo');
+            res.innerText = "CÓDIGO: " + codigo;
+            res.style.display = 'block';
+            alert("¡Código generado! Úsalo al finalizar tu pedido en WhatsApp.");
         }
 
         function buscar() {
@@ -184,23 +240,28 @@
         function mostrarProductos(lista) {
             const contenedor = document.getElementById('lista-productos');
             contenedor.innerHTML = '';
+            if(lista.length === 0) { contenedor.innerHTML = '<p style="color:#fff; text-align:center; grid-column: 1/-1;">No se encontraron camisetas...</p>'; return; }
+            
             lista.forEach(p => {
-                const linkWA = `https://wa.me/${nroWhatsApp}?text=Hola, quiero la Camiseta ${p.desc} ($89.990)`;
+                const linkWA = `https://wa.me/${nroWhatsApp}?text=Hola MDCLTS, quiero comprar la Camiseta ${encodeURIComponent(p.desc)} ($89.990)`;
                 contenedor.innerHTML += `
                     <div class="producto">
-                        <img src="${p.img}">
+                        <img src="${p.img}" alt="${p.desc}">
                         <span class="marca">${p.marca}</span>
                         <div class="desc-prod">${p.desc}</div>
                         <span class="precio">$89.990</span>
-                        <a href="${linkWA}" target="_blank" class="btn-directo">Compra Rápida</a>
-                        <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">🛒 Agregar al Carrito</button>
+                        <div class="botones-accion">
+                            <a href="${linkWA}" target="_blank" class="btn-directo">Compra Rápida WA</a>
+                            <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">🛒 Añadir al Carrito</button>
+                        </div>
                     </div>
                 `;
             });
         }
 
         function agregarAlCarrito(id) {
-            carrito.push(productos.find(p => p.id === id));
+            const prod = productos.find(p => p.id === id);
+            carrito.push(prod);
             actualizarCarrito();
             abrirPanel('panelCarrito');
         }
@@ -212,7 +273,16 @@
             let total = 0;
             carrito.forEach((item, index) => {
                 total += precioUnitario;
-                itemsCont.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; font-size:0.8rem;">${item.desc} - $89.990 <small onclick="eliminar(${index})" style="color:red; cursor:pointer">X</small></div>`;
+                itemsCont.innerHTML += `
+                    <div class="item-carrito">
+                        <img src="${item.img}">
+                        <div>
+                            <div style="font-weight:bold; font-size:0.85rem;">${item.desc}</div>
+                            <div>$89.990</div>
+                            <small onclick="eliminar(${index})" style="color:#e91e63; cursor:pointer; text-decoration:underline">Quitar</small>
+                        </div>
+                    </div>
+                `;
             });
             document.getElementById('total-precio').innerText = total.toLocaleString('es-CO');
         }
@@ -220,9 +290,10 @@
         function eliminar(idx) { carrito.splice(idx, 1); actualizarCarrito(); }
 
         function enviarPedido() {
-            let msg = "Hola MDCLTS, mi pedido:\n";
-            carrito.forEach(i => msg += `- ${i.desc}\n`);
-            msg += `Total: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
+            if(carrito.length === 0) return alert("Tu carrito está vacío.");
+            let msg = "Hola MDCLTS, este es mi pedido:\n\n";
+            carrito.forEach(i => msg += `• 1x ${i.desc} ($89.990)\n`);
+            msg += `\n*TOTAL A PAGAR: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}*`;
             window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -231,7 +302,7 @@
             mostrarProductos(marca === 'todos' ? productos : productos.filter(p => p.marca === marca));
         }
 
-        mostrarProductos(productos);
+        mostrarProductos(productos); // Carga inicial
     </script>
 </body>
 </html>

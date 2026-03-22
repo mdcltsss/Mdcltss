@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Detalle Premium</title>
+    <title>MDCLTS - Premium Streetwear Lorica</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Imagen de fondo de tu marca */
             --color-fondo-imagen: url('https://i.ibb.co/zVXX6fvF/file-00000000f9c471f5a15978499809ab55.png');
             --fuente-logo: 'Dancing Script', cursive;
             --fuente-cuerpo: 'Inter', sans-serif;
-            --fondo-paneles: rgba(0, 0, 0, 0.96);
-            --fondo-tarjetas: rgba(255, 255, 255, 0.92);
+            --fondo-paneles: rgba(0, 0, 0, 0.98);
+            --fondo-tarjetas: rgba(255, 255, 255, 0.95);
             --color-primario: #e91e63;
             --dorado: #D4AF37;
         }
 
-        body {
+        /* AJUSTE GLOBAL: Evita desbordes y asegura ancho completo */
+        html, body {
             margin: 0; padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Crucial para evitar descuadres laterales */
             background-image: var(--color-fondo-imagen);
             background-size: cover; background-attachment: fixed; background-position: center;
             color: #fff; font-family: var(--fuente-cuerpo);
@@ -26,85 +30,121 @@
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 5%; position: sticky; top: 0;
-            background: rgba(0,0,0,0.9); z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.95); z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            width: 90%; /* Ajuste para mantener padding dentro */
         }
 
-        .logo { font-family: var(--fuente-logo); font-size: 2.3rem; margin: 0; cursor: pointer; color: #fff; }
-        .iconos-header { display: flex; gap: 15px; align-items: center; }
-        .gift-icon, .cart-icon { font-size: 24px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; position: relative; }
+        /* --- CORRECCIÓN 1: NOMBRE LEIBLE CON BORDE NEGRO --- */
+        .logo { 
+            font-family: var(--fuente-logo); 
+            font-size: 2.6rem; margin: 0; cursor: pointer; color: #fff;
+            /* Sombra negra gruesa para legibilidad */
+            text-shadow: 
+                -2px -2px 0 #000,  
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                 0 0 15px rgba(212,175,55,0.4); /* Brillo dorado suave */
+        }
+
+        .iconos-header { display: flex; gap: 18px; align-items: center; }
+        .gift-icon, .cart-icon { font-size: 24px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; position: relative; transition: 0.3s; }
+        .gift-icon:hover, .cart-icon:hover { background: rgba(255,255,255,0.2); }
         
         .cart-count {
             position: absolute; top: -5px; right: -5px; background: var(--color-primario);
             color: white; font-size: 11px; padding: 3px 7px; border-radius: 50%; font-weight: bold;
         }
 
-        /* Buscador */
-        .search-container { padding: 25px 5% 5px 5%; text-align: center; }
+        /* Buscador Ajustado */
+        .search-container { padding: 25px 5% 10px 5%; text-align: center; width: 90%; }
         #buscador {
-            width: 100%; max-width: 450px; padding: 14px 20px; border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.7);
-            color: #fff; outline: none; font-size: 1rem;
+            width: 100%; max-width: 600px; padding: 16px 25px; border-radius: 30px;
+            border: 1px solid rgba(255,215,0,0.4); background: rgba(0,0,0,0.85);
+            color: #fff; outline: none; font-size: 1rem; transition: 0.3s;
         }
+        #buscador:focus { border-color: var(--dorado); box-shadow: 0 0 15px rgba(212,175,55,0.4); }
 
-        /* --- NUEVO: CARRUSEL DE INICIO --- */
+        /* --- CORRECCIÓN 2: AJUSTE DE CARRUSEL A ANCHO COMPLETO --- */
         .carousel-wrapper {
-            width: 90%; max-width: 1000px; margin: 20px auto;
-            position: relative; overflow: hidden; border-radius: 15px;
-            border: 1px solid rgba(255,215,0,0.3); height: 350px;
+            width: 100%; /* Ocupa todo el ancho */
+            max-width: 1300px; margin: 15px auto 35px auto;
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.2); height: 420px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
         .carousel-slide {
-            display: none; width: 100%; height: 100%; position: relative; animation: fade 1s;
+            display: none; width: 100%; height: 100%; position: relative; animation: fade 1.2s;
         }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+        
         .brand-tag {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.8); color: var(--dorado); padding: 8px 25px;
-            font-weight: bold; border: 1px solid var(--dorado); text-transform: uppercase; letter-spacing: 2px;
+            position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.85); color: var(--dorado); padding: 12px 40px;
+            font-weight: bold; border: 1.5px solid var(--dorado); text-transform: uppercase; 
+            letter-spacing: 5px; font-size: 1.3rem; border-radius: 5px;
+            text-shadow: 2px 2px 5px #000;
         }
-        @keyframes fade { from {opacity: 0.4} to {opacity: 1} }
+        @keyframes fade { from {opacity: 0.5} to {opacity: 1} }
 
         /* Títulos de Sección */
         .titulo-seccion { 
-            text-align: center; color: var(--dorado); font-size: 1.8rem; 
-            margin: 40px 0 10px; text-transform: uppercase; letter-spacing: 3px;
+            text-align: center; color: var(--dorado); font-size: 2.2rem; 
+            margin: 60px 0 20px; text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
         }
 
-        /* Catálogo */
+        /* Catálogo Ajustado */
         .contenedor-productos {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; padding: 10px 5% 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px; padding: 10px 5% 60px 5%; width: 90%;
         }
 
         .producto {
-            background: var(--fondo-tarjetas); padding: 15px; text-align: center; border-radius: 15px; color: #000;
-            transition: 0.3s;
+            background: var(--fondo-tarjetas); padding: 20px; text-align: center; border-radius: 15px; color: #000;
+            transition: 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
+        .producto:hover { transform: translateY(-7px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); border-color: rgba(212,175,55,0.3); }
         .producto img { width: 100%; border-radius: 10px; cursor: zoom-in; transition: 0.3s; object-fit: cover; aspect-ratio: 1/1; }
-        .marca { font-weight: bold; font-size: 0.7rem; text-transform: uppercase; color: #777; margin-top: 10px; display: block; }
-        .desc-prod { font-size: 1rem; margin: 5px 0; font-weight: 600; }
-        .precio { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: block; }
+        .marca { font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #666; margin-top: 15px; display: block; letter-spacing: 1.5px; }
+        .desc-prod { font-size: 1.2rem; margin: 8px 0 15px 0; font-weight: 600; color: #111; }
+        .precio { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; display: block; color: #000; }
 
-        .botones-accion { display: flex; flex-direction: column; gap: 8px; }
-        .btn-directo { background: #25d366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
-        .btn-carrito { background: #000; color: #fff; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+        .botones-accion { display: flex; flex-direction: column; gap: 12px; }
+        .btn-directo { background: #25d366; color: white; padding: 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+        .btn-directo:hover { background: #1ebe57; transform: scale(1.02); }
+        .btn-carrito { background: #000; color: #fff; padding: 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+        .btn-carrito:hover { background: #222; transform: scale(1.02); }
 
         /* Modales */
         #modalImagen {
             display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); align-items: center; justify-content: center; backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.97); align-items: center; justify-content: center; backdrop-filter: blur(12px);
         }
-        #imgExpandida { max-width: 90%; max-height: 85%; border-radius: 10px; }
-        .cerrar-modal { position: absolute; top: 20px; right: 30px; font-size: 50px; color: #fff; cursor: pointer; }
+        #imgExpandida { max-width: 90%; max-height: 85%; border-radius: 12px; box-shadow: 0 0 50px rgba(212,175,55,0.2); border: 2px solid rgba(255,255,255,0.1); }
+        .cerrar-modal { position: absolute; top: 25px; right: 40px; font-size: 60px; color: #fff; cursor: pointer; transition: 0.3s; }
+        .cerrar-modal:hover { color: var(--color-primario); }
 
         .panel { 
             display: block; position: fixed; z-index: 2000; height: 100%; background: var(--fondo-paneles); 
-            transition: 0.4s; top: 0; right: 0; width: 0; overflow-x: hidden; 
+            transition: 0.4s ease-in-out; top: 0; right: 0; width: 0; overflow-x: hidden; 
+            border-left: 2px solid rgba(212,175,55,0.3);
         }
 
-        @media (max-width: 600px) {
-            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
-            .carousel-wrapper { height: 250px; }
+        /* Estilos del menú lateral */
+        .menu-link { padding: 20px 35px; color: #fff; display: block; text-decoration: none; font-size: 1.15rem; border-bottom: 1px solid #222; transition: 0.3s; text-transform: uppercase; letter-spacing: 1.5px; }
+        .menu-link:hover { background: rgba(255,215,0,0.1); color: var(--dorado); padding-left: 42px; }
+
+        @media (max-width: 768px) {
+            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px 3% 50px 3%; width: 94%; }
+            .carousel-wrapper { height: 300px; width: 100%; margin-top: 10px; border-radius: 0; border-left: none; border-right: none; }
+            .logo { font-size: 2rem; }
+            .brand-tag { font-size: 1.1rem; padding: 10px 30px; letter-spacing: 3px; }
+            .titulo-seccion { font-size: 1.8rem; margin: 40px 0 15px; }
+            #buscador { padding: 14px 20px; }
+            .producto { padding: 15px; }
         }
     </style>
 </head>
@@ -117,32 +157,33 @@
             <div class="cart-icon" onclick="abrirPanel('panelCarrito')">
                 🛒 <span class="cart-count" id="contador">0</span>
             </div>
-            <div style="font-size: 30px; cursor: pointer;" onclick="abrirPanel('panelMenu')">&#9776;</div>
+            <div style="font-size: 35px; cursor: pointer; color: #fff;" onclick="abrirPanel('panelMenu')">&#9776;</div>
         </div>
     </header>
 
     <div class="search-container">
-        <input type="text" id="buscador" placeholder="Busca marca o estilo..." onkeyup="buscar()">
+        <input type="text" id="buscador" placeholder="Busca marca o estilo premium..." onkeyup="buscar()">
     </div>
 
     <div class="carousel-wrapper">
         <div class="carousel-slide">
-            <img src="https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg" alt="Camisetas">
-            <div class="brand-tag">NUEVA COLECCIÓN CAMISETAS</div>
+            <img src="https://i.ibb.co/rRLW0Pjm/IMG-0263.jpg" alt="Monastery">
+            <div class="brand-tag">MONASTERY</div>
         </div>
         <div class="carousel-slide">
-            <img src="https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg" alt="Marcas">
-            <div class="brand-tag">LO MEJOR EN STREETWEAR</div>
+            <img src="https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg" alt="Hugo Boss">
+            <div class="brand-tag">HUGO BOSS</div>
         </div>
     </div>
 
-    <h2 class="titulo-seccion">Camisetas</h2>
+    <h2 class="titulo-seccion" id="sec-camisetas">Camisetas</h2>
     <div class="contenedor-productos" id="lista-productos"></div>
 
-    <h2 class="titulo-seccion">Gorras</h2>
+    <h2 class="titulo-seccion" id="sec-gorras">Gorras</h2>
     <div class="contenedor-productos" id="lista-gorras">
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">
-            <p>Esperando nuevas existencias de gorras...</p>
+        <div style="grid-column: 1/-1; text-align: center; padding: 70px 20px; color: #888; background: rgba(255,255,255,0.04); border-radius: 15px; border: 1px dashed #555; width: 90%; margin: 0 auto;">
+            <p style="font-size: 1.3rem; margin: 0; color:var(--dorado); letter-spacing:1px;">Colección de Gorras Premium</p>
+            <p style="font-size: 1rem; margin-top: 15px;">Subiendo nuevas existencias próximamente...</p>
         </div>
     </div>
 
@@ -151,33 +192,41 @@
         <img id="imgExpandida">
     </div>
 
-    <div id="modalRegalo" class="modal-regalo" style="display:none; position:fixed; z-index:2500; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:30px; border-radius:20px; text-align:center; max-width:300px; color:#000;">
-            <h3>¡Tu Regalo! 🎁</h3>
-            <input type="email" id="emailRegalo" placeholder="Tu correo" style="width:90%; padding:10px; margin-bottom:10px;">
-            <button class="btn-carrito" style="width:100%;" onclick="generarCodigo()">Obtener Código</button>
-            <div id="resCod" style="margin-top:15px; font-weight:bold; color:var(--color-primario); display:none;"></div>
-            <p onclick="toggleModal('modalRegalo', false)" style="cursor:pointer; text-decoration:underline; font-size:0.8rem; margin-top:15px;">Cerrar</p>
+    <div id="modalRegalo" class="modal-regalo" style="display:none; position:fixed; z-index:2500; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; backdrop-filter:blur(5px);">
+        <div style="background:#fff; padding:35px; border-radius:20px; text-align:center; max-width:320px; color:#000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <h3 style="margin-top:0; color:var(--dorado); letter-spacing:1px;">¡Tu Regalo MDCLTS! 🎁</h3>
+            <p style="margin-bottom:20px; font-size:0.9rem;">Registra tu correo para recibir un código del 10% de descuento en tu primera compra:</p>
+            <input type="email" id="emailRegalo" placeholder="Tu mejor correo" style="width:92%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; outline:none;">
+            <button class="btn-carrito" style="width:100%; background:var(--color-primario); border-radius:8px;" onclick="generarCodigo()">Obtener Mi Código</button>
+            <div id="resCod" style="margin-top:20px; font-weight:bold; color:var(--color-primario); display:none; font-size:1.1rem; border:2px dashed var(--color-primario); padding:10px;"></div>
+            <p onclick="toggleModal('modalRegalo', false)" style="cursor:pointer; text-decoration:underline; font-size:0.85rem; margin-top:20px; color:#555;">Cerrar</p>
         </div>
     </div>
 
     <div id="panelMenu" class="panel">
-        <span onclick="cerrarPanel('panelMenu')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer; color:#fff;">&times;</span>
-        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333; color:#fff;">Marcas</h2>
-        <a href="#" onclick="filtrar('todos')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">TODAS</a>
-        <a href="#" onclick="filtrar('clemont')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">CLEMONT</a>
-        <a href="#" onclick="filtrar('lacoste')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">LACOSTE</a>
-        <a href="#" onclick="filtrar('essentials')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">ESSENTIALS</a>
-        <a href="#" onclick="filtrar('hugo')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">HUGO BOSS</a>
-        <a href="#" onclick="filtrar('monastery')" style="padding:15px 30px; color:#fff; display:block; text-decoration:none;">MONASTERY</a>
+        <span onclick="cerrarPanel('panelMenu')" style="position:absolute; top:20px; left:25px; font-size:45px; cursor:pointer; color:#fff;">&times;</span>
+        <h2 style="padding:90px 30px 20px 30px; border-bottom:1px solid #333; color:var(--dorado); text-transform:uppercase; letter-spacing:3px; margin:0;">Navegación</h2>
+        
+        <a href="#sec-camisetas" onclick="cerrarPanel('panelMenu')" class="menu-link">Camisetas (Todas)</a>
+        <a href="#sec-gorras" onclick="cerrarPanel('panelMenu')" class="menu-link" style="color:var(--dorado); font-weight:bold;">Gorras Premium</a>
+        
+        <h3 style="padding:30px 30px 10px 30px; color:#666; text-transform:uppercase; font-size:0.8rem; margin:0; letter-spacing:2px;">Marcas Camisetas</h3>
+        <a href="#" onclick="filtrar('clemont')" class="menu-link">CLEMONT</a>
+        <a href="#" onclick="filtrar('lacoste')" class="menu-link">LACOSTE</a>
+        <a href="#" onclick="filtrar('essentials')" class="menu-link">ESSENTIALS</a>
+        <a href="#" onclick="filtrar('hugo')" class="menu-link">HUGO BOSS</a>
+        <a href="#" onclick="filtrar('monastery')" class="menu-link">MONASTERY</a>
     </div>
 
     <div id="panelCarrito" class="panel">
-        <span onclick="cerrarPanel('panelCarrito')" style="position:absolute; top:20px; left:25px; font-size:35px; cursor:pointer; color:#fff;">&times;</span>
-        <h2 style="padding:80px 30px 20px 30px; border-bottom:1px solid #333; color:#fff;">Carrito</h2>
-        <div id="items-carrito"></div>
-        <div style="padding:25px; font-weight:bold; font-size:1.3rem; color:#fff;">Total: $<span id="total-precio">0</span></div>
-        <button class="btn-carrito" style="margin:0 25px; width:calc(100% - 50px); background:var(--color-primario);" onclick="enviarPedido()">Finalizar Pedido</button>
+        <span onclick="cerrarPanel('panelCarrito')" style="position:absolute; top:20px; left:25px; font-size:45px; cursor:pointer; color:#fff;">&times;</span>
+        <h2 style="padding:90px 30px 20px 30px; border-bottom:1px solid #333; color:#fff; text-transform:uppercase; letter-spacing:2px; margin:0;">Tu Carrito</h2>
+        <div id="items-carrito" style="padding-top:10px;"></div>
+        <div style="padding:25px; font-weight:bold; font-size:1.4rem; color:#fff; display:flex; justify-content:space-between; border-top:1px solid #222;">
+            <span>Total:</span>
+            <span>$<span id="total-precio">0</span></span>
+        </div>
+        <button class="btn-carrito" style="margin:0 25px; width:calc(100% - 50px); background:var(--color-primario); border-radius:8px; font-size:1rem; padding:18px;" onclick="enviarPedido()">Finalizar Pedido por WhatsApp</button>
     </div>
 
     <script>
@@ -204,51 +253,76 @@
             { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        // LÓGICA CARRUSEL
+        const gorras = []; 
+
+        // LÓGICA CARRUSEL AUTOMÁTICO
         let slideIndex = 0;
         function autoSlide() {
             let slides = document.getElementsByClassName("carousel-slide");
+            if (slides.length === 0) return;
             for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
             slideIndex++;
             if (slideIndex > slides.length) {slideIndex = 1}
             slides[slideIndex-1].style.display = "block";
-            setTimeout(autoSlide, 4000);
+            setTimeout(autoSlide, 5000); 
         }
         autoSlide();
 
-        // FUNCIONES DE TU CÓDIGO ORIGINAL
         function verImagen(url) { document.getElementById('imgExpandida').src = url; document.getElementById('modalImagen').style.display = 'flex'; }
         function cerrarImagen() { document.getElementById('modalImagen').style.display = 'none'; }
-        function abrirPanel(id) { document.getElementById(id).style.width = window.innerWidth > 600 ? "350px" : "100%"; }
+        
+        function abrirPanel(id) { 
+            const panel = document.getElementById(id);
+            if(window.innerWidth > 768) { panel.style.width = "400px"; }
+            else { panel.style.width = "100%"; }
+        }
         function cerrarPanel(id) { document.getElementById(id).style.width = "0"; }
         function toggleModal(id, show) { document.getElementById(id).style.display = show ? 'flex' : 'none'; }
 
         function buscar() {
             const t = document.getElementById('buscador').value.toLowerCase();
-            mostrarProductos(productos.filter(p => p.marca.includes(t) || p.desc.toLowerCase().includes(t)));
+            const filtrados = productos.filter(p => p.marca.includes(t) || p.desc.toLowerCase().includes(t));
+            mostrarProductos(filtrados, 'lista-productos');
         }
 
         function generarCodigo() {
             const email = document.getElementById('emailRegalo').value;
-            if(!email.includes('@')) return alert("Email inválido");
-            const cod = "MDCLTS-" + Math.floor(1000 + Math.random()*9000);
-            document.getElementById('resCod').innerText = "CÓDIGO: " + cod;
-            document.getElementById('resCod').style.display = 'block';
+            if(!email.includes('@') || email.length < 5) return alert("Por favor, introduce un correo electrónico válido.");
+            const cod = "MDCLTS-" + Math.floor(1000 + Math.random()*9999);
+            const res = document.getElementById('resCod');
+            res.innerText = cod;
+            res.style.display = 'block';
+            document.getElementById('emailRegalo').disabled = true;
         }
 
-        function mostrarProductos(lista) {
-            const c = document.getElementById('lista-productos');
+        function mostrarProductos(lista, contenedorId) {
+            const c = document.getElementById(contenedorId);
             c.innerHTML = '';
+            
+            if(lista.length === 0 && contenedorId === 'lista-gorras') {
+                c.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 70px 20px; color: #888; background: rgba(255,255,255,0.04); border-radius: 15px; border: 1px dashed #555; width: 90%; margin: 0 auto;">
+                        <p style="font-size: 1.3rem; margin: 0; color:var(--dorado); letter-spacing:1px;">Colección de Gorras Premium</p>
+                        <p style="font-size: 1rem; margin-top: 15px;">Subiendo nuevas existencias próximamente...</p>
+                    </div>`;
+                return;
+            } else if (lista.length === 0) {
+                 c.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#888; padding:40px;">No se encontraron productos en esta categoría.</p>';
+                 return;
+            }
+
             lista.forEach(p => {
-                const wa = `https://wa.me/${nroWhatsApp}?text=Hola, quiero la Camiseta ${encodeURIComponent(p.desc)}`;
+                const precioFormateado = precioUnitario.toLocaleString('es-CO');
+                const waDirecto = `https://wa.me/${nroWhatsApp}?text=Hola MDCLTS Lorica👋, me interesa la Camiseta ${encodeURIComponent(p.desc)} ($${precioFormateado})`;
+                
                 c.innerHTML += `
                     <div class="producto">
-                        <img src="${p.img}" onclick="verImagen('${p.img}')">
+                        <img src="${p.img}" onclick="verImagen('${p.img}')" title="Clic para ampliar">
                         <span class="marca">${p.marca}</span>
                         <div class="desc-prod">${p.desc}</div>
-                        <span class="precio">$89.990</span>
+                        <span class="precio">$${precioFormateado}</span>
                         <div class="botones-accion">
-                            <a href="${wa}" target="_blank" class="btn-directo">WhatsApp Directo</a>
+                            <a href="${waDirecto}" target="_blank" class="btn-directo">Comprar Directo</a>
                             <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">Añadir al Carrito</button>
                         </div>
                     </div>`;
@@ -256,7 +330,8 @@
         }
 
         function agregarAlCarrito(id) {
-            carrito.push(productos.find(p => p.id === id));
+            const producto = productos.find(p => p.id === id);
+            carrito.push(producto);
             actualizarCarrito();
             abrirPanel('panelCarrito');
         }
@@ -266,30 +341,51 @@
             const items = document.getElementById('items-carrito');
             items.innerHTML = '';
             let total = 0;
-            carrito.forEach((item, i) => {
-                total += precioUnitario;
-                items.innerHTML += `
-                    <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #222; gap:10px; color:#fff;">
-                        <img src="${item.img}" style="width:50px; border-radius:5px;">
-                        <div style="flex:1; font-size:0.8rem;">${item.desc}<br>$89.990</div>
-                        <small onclick="eliminar(${i})" style="color:red; cursor:pointer">X</small>
-                    </div>`;
-            });
+            
+            if(carrito.length === 0) {
+                items.innerHTML = '<p style="text-align:center; color:#666; padding:30px;">Tu carrito está vacío mk.</p>';
+            } else {
+                carrito.forEach((item, i) => {
+                    total += precioUnitario;
+                    items.innerHTML += `
+                        <div style="display:flex; align-items:center; padding:18px; border-bottom:1px solid #222; gap:18px; color:#fff;">
+                            <img src="${item.img}" style="width:65px; height:65px; object-fit:cover; border-radius:8px; border:1px solid #333;">
+                            <div style="flex:1;">
+                                <div style="font-size:1rem; font-weight:bold; color:#fff;">${item.desc}</div>
+                                <div style="color:var(--dorado); font-size:0.9rem; margin-top:4px;">$${precioUnitario.toLocaleString('es-CO')}</div>
+                            </div>
+                            <span onclick="eliminar(${i})" style="color:#ff4444; cursor:pointer; font-size:1.4rem; font-weight:bold; padding:10px;">&times;</span>
+                        </div>`;
+                });
+            }
             document.getElementById('total-precio').innerText = total.toLocaleString('es-CO');
         }
 
-        function eliminar(idx) { carrito.splice(idx,1); actualizarCarrito(); }
-        function filtrar(m) { cerrarPanel('panelMenu'); mostrarProductos(m==='todos'?productos:productos.filter(p=>p.marca===m)); }
+        function eliminar(idx) { 
+            carrito.splice(idx,1); 
+            actualizarCarrito(); 
+        }
+        
+        function filtrar(m) { 
+            cerrarPanel('panelMenu'); 
+            document.getElementById('sec-camisetas').scrollIntoView({ behavior: 'smooth' });
+            if(m === 'todos') { mostrarProductos(productos, 'lista-productos'); }
+            else { mostrarProductos(productos.filter(p=>p.marca===m), 'lista-productos'); }
+        }
 
         function enviarPedido() {
-            if(carrito.length === 0) return alert("Carrito vacío");
-            let m = "Hola MDCLTS, mi pedido:\n";
-            carrito.forEach(i => m += `- ${i.desc}\n`);
-            m += `Total: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
+            if(carrito.length === 0) return alert("Añade algo al carrito primero mk.");
+            let m = "Hola MDCLTS 👋, quiero este pedido premium:\n\n";
+            carrito.forEach((i, index) => m += `${index + 1}. Camiseta ${i.desc} ($${precioUnitario.toLocaleString('es-CO')})\n`);
+            m += `\n💰 Total: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}\n`;
+            m += "\n¿Coordinamos el envío?";
             window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(m)}`);
         }
 
-        mostrarProductos(productos);
+        // Inicio
+        mostrarProductos(productos, 'lista-productos');
+        mostrarProductos(gorras, 'lista-gorras'); 
+        actualizarCarrito(); 
     </script>
 </body>
 </html>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Nueva Colección</title>
+    <title>MDCLTS - Colección Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-fondo: #ffffff;
+            --color-fondo: #ffffff; /* Aquí cambiaremos el link de fondo después */
             --color-texto: #000000;
-            --fuente-logo: 'Dancing+Script', cursive;
+            --fuente-logo: 'Dancing Script', cursive;
             --fuente-cuerpo: 'Inter', sans-serif;
         }
 
@@ -17,117 +17,115 @@
             margin: 0;
             padding: 0;
             background-color: var(--color-fondo);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
             color: var(--color-texto);
             font-family: var(--fuente-cuerpo);
         }
 
         header {
-            text-align: center;
-            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.9);
+            z-index: 100;
         }
 
         .logo {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-family: var(--fuente-logo);
+            font-size: 2.5rem;
             margin: 0;
         }
 
-        /* Menú lateral de filtros */
-        .filtros {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-            padding: 0 10px;
-        }
-
-        .filtro-btn {
-            background: none;
-            border: 1px solid #000;
-            padding: 8px 15px;
+        /* Botón de 3 líneas (Menú Hamburguesa) */
+        .menu-btn {
+            font-size: 30px;
             cursor: pointer;
+            background: none;
+            border: none;
+            color: black;
+        }
+
+        /* Menú Lateral (Overlay) */
+        .menu-lateral {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1001;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.4s;
+            padding-top: 60px;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .menu-lateral a {
+            padding: 15px 32px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #000;
+            display: block;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        .filtro-btn:hover {
-            background: #000;
-            color: #fff;
+        .menu-lateral a:hover { color: #888; }
+
+        .menu-lateral .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 36px;
         }
 
-        /* Contenedor de productos */
+        /* Catálogo */
         .contenedor-productos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 40px 5%;
         }
 
         .producto {
-            text-align: center;
-            border: 1px solid #f0f0f0;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #eee;
             padding: 15px;
-            transition: transform 0.3s;
+            text-align: center;
+            border-radius: 8px;
         }
 
-        .producto:hover {
-            transform: translateY(-5px);
-        }
+        .producto img { width: 100%; border-radius: 5px; }
 
-        .producto img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
+        .marca { font-weight: bold; margin-top: 10px; display: block; text-transform: uppercase; }
+        
+        .precio { font-size: 1.2rem; font-weight: 700; margin: 10px 0; display: block; }
 
-        .info-producto {
-            margin-top: 15px;
-        }
-
-        .marca {
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .descripcion {
-            font-size: 0.85rem;
-            color: #555;
-            margin: 5px 0;
-        }
-
-        .precio {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        /* Botón WhatsApp Flotante */
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        /* Botón de Comprar por WhatsApp */
+        .btn-comprar {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
             text-decoration: none;
-            z-index: 1000;
-            font-size: 30px;
+            display: inline-block;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
+
+        .btn-comprar:hover { background-color: #333; }
 
         @media (max-width: 600px) {
-            .logo { font-size: 2.5rem; }
-            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .logo { font-size: 2rem; }
         }
     </style>
 </head>
@@ -135,67 +133,71 @@
 
     <header>
         <h1 class="logo">MDCLTS</h1>
+        <button class="menu-btn" onclick="abrirMenu()">&#9776;</button>
     </header>
 
-    <div class="filtros">
-        <button class="filtro-btn" onclick="filtrar('todos')">Todos</button>
-        <button class="filtro-btn" onclick="filtrar('clemont')">Clemont</button>
-        <button class="filtro-btn" onclick="filtrar('lacoste')">Lacoste</button>
-        <button class="filtro-btn" onclick="filtrar('essentials')">Essentials</button>
-        <button class="filtro-btn" onclick="filtrar('monastery')">Monastery</button>
-        <button class="filtro-btn" onclick="filtrar('hugo')">Hugo Boss</button>
-        <button class="filtro-btn" onclick="filtrar('prada')">Prada</button>
-        <button class="filtro-btn" onclick="filtrar('otros')">Otros</button>
+    <div id="miMenu" class="menu-lateral">
+        <a class="close-btn" onclick="cerrarMenu()">&times;</a>
+        <a onclick="filtrar('todos')">Ver Todo</a>
+        <a onclick="filtrar('clemont')">Clemont</a>
+        <a onclick="filtrar('lacoste')">Lacoste</a>
+        <a onclick="filtrar('essentials')">Essentials</a>
+        <a onclick="filtrar('monastery')">Monastery</a>
+        <a onclick="filtrar('hugo')">Hugo Boss</a>
+        <a onclick="filtrar('prada')">Prada</a>
+        <a onclick="filtrar('balmain')">Balmain</a>
+        <a onclick="filtrar('nike')">Nike</a>
     </div>
 
     <div class="contenedor-productos" id="lista-productos">
         </div>
 
-    <a href="https://wa.me/573018942801" class="whatsapp-btn" target="_blank">
-        <span style="font-size: 12px; font-weight: bold; font-family: sans-serif;">WhatsApp</span>
-    </a>
-
     <script>
+        const nroWhatsApp = "573018942801";
+        
         const productos = [
-            { img: 'https://i.ibb.co/BHRtpKhL/IMG-3083.jpg', marca: 'clemont', desc: 'Camiseta Clemont Negra' },
-            { img: 'https://i.ibb.co/wrLfQP7g/IMG-3084.jpg', marca: 'clemont', desc: 'Camiseta Clemont Blanca' },
-            { img: 'https://i.ibb.co/YB878d2J/IMG-3086.jpg', marca: 'clemont', desc: 'Camiseta Clemont Piel' },
-            { img: 'https://i.ibb.co/1t32Py6g/a30c3222-ffea-4560-b3c4-b1f0561121ca.jpg', marca: 'clemont', desc: 'Camiseta Clemont Negra V2' },
-            { img: 'https://i.ibb.co/sSSpTTF/IMG-3123.jpg', marca: 'lacoste', desc: 'Camiseta Lacoste Rojo' },
-            { img: 'https://i.ibb.co/qYNVdh7Y/IMG-9468.jpg', marca: 'lacoste', desc: 'Camiseta Lacoste Gris' },
-            { img: 'https://i.ibb.co/6RnLj3gd/IMG-9474.jpg', marca: 'lacoste', desc: 'Camiseta Lacoste Café' },
-            { img: 'https://i.ibb.co/1YTRvRLT/IMG-0266.jpg', marca: 'essentials', desc: 'Camiseta Essentials Verde' },
-            { img: 'https://i.ibb.co/SXV3ZyDm/IMG-0268.jpg', marca: 'essentials', desc: 'Camiseta Essentials Café' },
-            { img: 'https://i.ibb.co/C3vRm675/IMG-0261-1.jpg', marca: 'monastery', desc: 'Camiseta Monastery Café' },
-            { img: 'https://i.ibb.co/rRLW0Pjm/IMG-0263.jpg', marca: 'monastery', desc: 'Camiseta Monastery Negra' },
-            { img: 'https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg', marca: 'hugo', desc: 'Camiseta Hugo Boss Gris' },
-            { img: 'https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg', marca: 'hugo', desc: 'Camiseta Hugo Boss Blanco' },
-            { img: 'https://i.ibb.co/Y7VbLH00/781c854a-5a9e-4167-929b-3074e2835a61.jpg', marca: 'prada', desc: 'Camiseta Prada Blanco' },
-            { img: 'https://i.ibb.co/ymFKxGYj/43409ec0-cdab-48fa-8b38-f685866ca30f-1.jpg', marca: 'prada', desc: 'Camiseta Prada Negro' },
-            { img: 'https://i.ibb.co/rKgyc4dQ/ed65d0ae-8840-48ae-978b-82bde2b40e82-1.jpg', marca: 'otros', desc: 'Camiseta Balmain Negra' },
-            { img: 'https://i.ibb.co/Ldb4Zhsf/b9ed0bb6-a247-49c2-897e-1a76533d2b50-1.jpg', marca: 'otros', desc: 'Camiseta Guess Negra' },
-            { img: 'https://i.ibb.co/6JvCBcsH/ab030271-95c8-4ece-b92c-6b6c85f669ae-1.jpg', marca: 'otros', desc: 'Camiseta Balmain Blanca/Negra' },
-            { img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'otros', desc: 'Camiseta Nike Azul' }
+            { img: 'https://i.ibb.co/BHRtpKhL/IMG-3083.jpg', marca: 'clemont', desc: 'Clemont Negra' },
+            { img: 'https://i.ibb.co/wrLfQP7g/IMG-3084.jpg', marca: 'clemont', desc: 'Clemont Blanca' },
+            { img: 'https://i.ibb.co/YB878d2J/IMG-3086.jpg', marca: 'clemont', desc: 'Clemont Piel' },
+            { img: 'https://i.ibb.co/1t32Py6g/a30c3222-ffea-4560-b3c4-b1f0561121ca.jpg', marca: 'clemont', desc: 'Clemont Negra V2' },
+            { img: 'https://i.ibb.co/sSSpTTF/IMG-3123.jpg', marca: 'lacoste', desc: 'Lacoste Rojo' },
+            { img: 'https://i.ibb.co/qYNVdh7Y/IMG-9468.jpg', marca: 'lacoste', desc: 'Lacoste Gris' },
+            { img: 'https://i.ibb.co/6RnLj3gd/IMG-9474.jpg', marca: 'lacoste', desc: 'Lacoste Café' },
+            { img: 'https://i.ibb.co/1YTRvRLT/IMG-0266.jpg', marca: 'essentials', desc: 'Essentials Verde' },
+            { img: 'https://i.ibb.co/SXV3ZyDm/IMG-0268.jpg', marca: 'essentials', desc: 'Essentials Café' },
+            { img: 'https://i.ibb.co/C3vRm675/IMG-0261-1.jpg', marca: 'monastery', desc: 'Monastery Café' },
+            { img: 'https://i.ibb.co/rRLW0Pjm/IMG-0263.jpg', marca: 'monastery', desc: 'Monastery Negra' },
+            { img: 'https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg', marca: 'hugo', desc: 'Hugo Boss Gris' },
+            { img: 'https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg', marca: 'hugo', desc: 'Hugo Boss Blanco' },
+            { img: 'https://i.ibb.co/Y7VbLH00/781c854a-5a9e-4167-929b-3074e2835a61.jpg', marca: 'prada', desc: 'Prada Blanco' },
+            { img: 'https://i.ibb.co/ymFKxGYj/43409ec0-cdab-48fa-8b38-f685866ca30f-1.jpg', marca: 'prada', desc: 'Prada Negro' },
+            { img: 'https://i.ibb.co/rKgyc4dQ/ed65d0ae-8840-48ae-978b-82bde2b40e82-1.jpg', marca: 'balmain', desc: 'Balmain Negra' },
+            { img: 'https://i.ibb.co/6JvCBcsH/ab030271-95c8-4ece-b92c-6b6c85f669ae-1.jpg', marca: 'balmain', desc: 'Balmain Blanca/Negra' },
+            { img: 'https://i.ibb.co/Ldb4Zhsf/b9ed0bb6-a247-49c2-897e-1a76533d2b50-1.jpg', marca: 'otros', desc: 'Guess Negra' },
+            { img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
+
+        function abrirMenu() { document.getElementById("miMenu").style.width = "250px"; }
+        function cerrarMenu() { document.getElementById("miMenu").style.width = "0"; }
 
         function mostrarProductos(lista) {
             const contenedor = document.getElementById('lista-productos');
             contenedor.innerHTML = '';
             lista.forEach(p => {
+                const mensaje = encodeURIComponent(`Hola, me interesa la Camiseta ${p.desc}`);
                 contenedor.innerHTML += `
                     <div class="producto">
                         <img src="${p.img}" alt="${p.desc}">
-                        <div class="info-producto">
-                            <div class="marca">${p.marca}</div>
-                            <div class="descripcion">${p.desc}</div>
-                            <div class="precio">$89.990</div>
-                        </div>
+                        <span class="marca">${p.marca}</span>
+                        <span class="precio">$89.990</span>
+                        <a href="https://wa.me/${nroWhatsApp}?text=${mensaje}" target="_blank" class="btn-comprar">Comprar ahora</a>
                     </div>
                 `;
             });
         }
 
         function filtrar(marca) {
+            cerrarMenu();
             if(marca === 'todos') {
                 mostrarProductos(productos);
             } else {

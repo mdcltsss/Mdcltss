@@ -3,141 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Colección Premium</title>
+    <title>MDCLTS - Carrito de Compras</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-fondo: #ffffff; /* Aquí cambiaremos el link de fondo después */
+            --color-fondo: #ffffff;
             --color-texto: #000000;
             --fuente-logo: 'Dancing Script', cursive;
             --fuente-cuerpo: 'Inter', sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--color-fondo);
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            color: var(--color-texto);
-            font-family: var(--fuente-cuerpo);
+            background-size: cover; background-attachment: fixed; background-position: center;
+            color: var(--color-texto); font-family: var(--fuente-cuerpo);
         }
 
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            position: sticky;
-            top: 0;
-            background: rgba(255,255,255,0.9);
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .logo {
-            font-family: var(--fuente-logo);
-            font-size: 2.5rem;
-            margin: 0;
+        .logo { font-family: var(--fuente-logo); font-size: 2.2rem; margin: 0; cursor: pointer; }
+
+        .iconos-header { display: flex; gap: 20px; align-items: center; }
+
+        .cart-icon { position: relative; cursor: pointer; font-size: 24px; }
+
+        .cart-count {
+            position: absolute; top: -10px; right: -10px; background: red;
+            color: white; font-size: 12px; padding: 2px 6px; border-radius: 50%;
         }
 
-        /* Botón de 3 líneas (Menú Hamburguesa) */
-        .menu-btn {
-            font-size: 30px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: black;
-        }
+        .menu-btn { font-size: 28px; cursor: pointer; background: none; border: none; }
 
-        /* Menú Lateral (Overlay) */
-        .menu-lateral {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1001;
-            top: 0;
-            right: 0;
-            background-color: #fff;
-            overflow-x: hidden;
-            transition: 0.4s;
-            padding-top: 60px;
+        /* Menú Lateral y Carrito Lateral */
+        .panel {
+            height: 100%; width: 0; position: fixed; z-index: 1001; top: 0; right: 0;
+            background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 60px;
             box-shadow: -2px 0 10px rgba(0,0,0,0.1);
         }
 
-        .menu-lateral a {
-            padding: 15px 32px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: #000;
-            display: block;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .menu-lateral a:hover { color: #888; }
-
-        .menu-lateral .close-btn {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 36px;
-        }
+        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; }
+        
+        .close-btn { position: absolute; top: 10px; left: 20px; font-size: 30px; cursor: pointer; }
 
         /* Catálogo */
         .contenedor-productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px; padding: 30px 5%;
         }
 
-        .producto {
-            background: rgba(255,255,255,0.8);
-            border: 1px solid #eee;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px;
+        .producto { background: #fff; border: 1px solid #eee; padding: 15px; text-align: center; border-radius: 8px; }
+        .producto img { width: 100%; border-radius: 5px; margin-bottom: 10px; }
+        .marca { font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #666; }
+        .precio { font-size: 1.1rem; font-weight: 700; margin: 8px 0; display: block; }
+
+        .btn-agregar {
+            background-color: #000; color: #fff; padding: 10px; width: 100%;
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
         }
 
-        .producto img { width: 100%; border-radius: 5px; }
-
-        .marca { font-weight: bold; margin-top: 10px; display: block; text-transform: uppercase; }
-        
-        .precio { font-size: 1.2rem; font-weight: 700; margin: 10px 0; display: block; }
-
-        /* Botón de Comprar por WhatsApp */
-        .btn-comprar {
-            background-color: #000;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: bold;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            transition: 0.3s;
+        /* Estilos del Carrito */
+        .item-carrito { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 10px; }
+        .item-carrito img { width: 50px; height: 50px; object-fit: cover; }
+        .total-container { padding: 20px; font-weight: bold; font-size: 1.2rem; }
+        .btn-whatsapp-final {
+            background-color: #25d366; color: white; text-align: center; padding: 15px;
+            margin: 20px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold;
         }
 
-        .btn-comprar:hover { background-color: #333; }
-
-        @media (max-width: 600px) {
-            .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .logo { font-size: 2rem; }
-        }
+        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="logo">MDCLTS</h1>
-        <button class="menu-btn" onclick="abrirMenu()">&#9776;</button>
+        <h1 class="logo" onclick="location.reload()">MDCLTS</h1>
+        <div class="iconos-header">
+            <div class="cart-icon" onclick="abrirCarpeta('carrito')">
+                🛒 <span class="cart-count" id="contador">0</span>
+            </div>
+            <button class="menu-btn" onclick="abrirCarpeta('menu')">&#9776;</button>
+        </div>
     </header>
 
-    <div id="miMenu" class="menu-lateral">
-        <a class="close-btn" onclick="cerrarMenu()">&times;</a>
+    <div id="panelMenu" class="panel">
+        <span class="close-btn" onclick="cerrarCarpeta('menu')">&times;</span>
+        <h2 style="font-size: 1rem;">Marcas</h2>
         <a onclick="filtrar('todos')">Ver Todo</a>
         <a onclick="filtrar('clemont')">Clemont</a>
         <a onclick="filtrar('lacoste')">Lacoste</a>
@@ -145,68 +100,120 @@
         <a onclick="filtrar('monastery')">Monastery</a>
         <a onclick="filtrar('hugo')">Hugo Boss</a>
         <a onclick="filtrar('prada')">Prada</a>
-        <a onclick="filtrar('balmain')">Balmain</a>
-        <a onclick="filtrar('nike')">Nike</a>
     </div>
 
-    <div class="contenedor-productos" id="lista-productos">
-        </div>
+    <div id="panelCarrito" class="panel">
+        <span class="close-btn" onclick="cerrarCarpeta('carrito')">&times;</span>
+        <h2>Tu Pedido</h2>
+        <div id="items-carrito"></div>
+        <div class="total-container">Total: $<span id="total-precio">0</span></div>
+        <a href="#" id="enviar-wa" class="btn-whatsapp-final" onclick="enviarPedido()">Pedir por WhatsApp</a>
+    </div>
+
+    <div class="contenedor-productos" id="lista-productos"></div>
 
     <script>
         const nroWhatsApp = "573018942801";
-        
+        const precioUnitario = 89990;
+        let carrito = [];
+
         const productos = [
-            { img: 'https://i.ibb.co/BHRtpKhL/IMG-3083.jpg', marca: 'clemont', desc: 'Clemont Negra' },
-            { img: 'https://i.ibb.co/wrLfQP7g/IMG-3084.jpg', marca: 'clemont', desc: 'Clemont Blanca' },
-            { img: 'https://i.ibb.co/YB878d2J/IMG-3086.jpg', marca: 'clemont', desc: 'Clemont Piel' },
-            { img: 'https://i.ibb.co/1t32Py6g/a30c3222-ffea-4560-b3c4-b1f0561121ca.jpg', marca: 'clemont', desc: 'Clemont Negra V2' },
-            { img: 'https://i.ibb.co/sSSpTTF/IMG-3123.jpg', marca: 'lacoste', desc: 'Lacoste Rojo' },
-            { img: 'https://i.ibb.co/qYNVdh7Y/IMG-9468.jpg', marca: 'lacoste', desc: 'Lacoste Gris' },
-            { img: 'https://i.ibb.co/6RnLj3gd/IMG-9474.jpg', marca: 'lacoste', desc: 'Lacoste Café' },
-            { img: 'https://i.ibb.co/1YTRvRLT/IMG-0266.jpg', marca: 'essentials', desc: 'Essentials Verde' },
-            { img: 'https://i.ibb.co/SXV3ZyDm/IMG-0268.jpg', marca: 'essentials', desc: 'Essentials Café' },
-            { img: 'https://i.ibb.co/C3vRm675/IMG-0261-1.jpg', marca: 'monastery', desc: 'Monastery Café' },
-            { img: 'https://i.ibb.co/rRLW0Pjm/IMG-0263.jpg', marca: 'monastery', desc: 'Monastery Negra' },
-            { img: 'https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg', marca: 'hugo', desc: 'Hugo Boss Gris' },
-            { img: 'https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg', marca: 'hugo', desc: 'Hugo Boss Blanco' },
-            { img: 'https://i.ibb.co/Y7VbLH00/781c854a-5a9e-4167-929b-3074e2835a61.jpg', marca: 'prada', desc: 'Prada Blanco' },
-            { img: 'https://i.ibb.co/ymFKxGYj/43409ec0-cdab-48fa-8b38-f685866ca30f-1.jpg', marca: 'prada', desc: 'Prada Negro' },
-            { img: 'https://i.ibb.co/rKgyc4dQ/ed65d0ae-8840-48ae-978b-82bde2b40e82-1.jpg', marca: 'balmain', desc: 'Balmain Negra' },
-            { img: 'https://i.ibb.co/6JvCBcsH/ab030271-95c8-4ece-b92c-6b6c85f669ae-1.jpg', marca: 'balmain', desc: 'Balmain Blanca/Negra' },
-            { img: 'https://i.ibb.co/Ldb4Zhsf/b9ed0bb6-a247-49c2-897e-1a76533d2b50-1.jpg', marca: 'otros', desc: 'Guess Negra' },
-            { img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
+            { id: 1, img: 'https://i.ibb.co/BHRtpKhL/IMG-3083.jpg', marca: 'clemont', desc: 'Clemont Negra' },
+            { id: 2, img: 'https://i.ibb.co/wrLfQP7g/IMG-3084.jpg', marca: 'clemont', desc: 'Clemont Blanca' },
+            { id: 3, img: 'https://i.ibb.co/YB878d2J/IMG-3086.jpg', marca: 'clemont', desc: 'Clemont Piel' },
+            { id: 4, img: 'https://i.ibb.co/sSSpTTF/IMG-3123.jpg', marca: 'lacoste', desc: 'Lacoste Rojo' },
+            { id: 5, img: 'https://i.ibb.co/qYNVdh7Y/IMG-9468.jpg', marca: 'lacoste', desc: 'Lacoste Gris' },
+            { id: 6, img: 'https://i.ibb.co/6RnLj3gd/IMG-9474.jpg', marca: 'lacoste', desc: 'Lacoste Café' },
+            { id: 7, img: 'https://i.ibb.co/1YTRvRLT/IMG-0266.jpg', marca: 'essentials', desc: 'Essentials Verde' },
+            { id: 8, img: 'https://i.ibb.co/SXV3ZyDm/IMG-0268.jpg', marca: 'essentials', desc: 'Essentials Café' },
+            { id: 9, img: 'https://i.ibb.co/C3vRm675/IMG-0261-1.jpg', marca: 'monastery', desc: 'Monastery Café' },
+            { id: 10, img: 'https://i.ibb.co/rRLW0Pjm/IMG-0263.jpg', marca: 'monastery', desc: 'Monastery Negra' },
+            { id: 11, img: 'https://i.ibb.co/LXMq549x/a6a4d12f-d481-49b9-b248-f6041802f6a3-1.jpg', marca: 'hugo', desc: 'Hugo Boss Gris' },
+            { id: 12, img: 'https://i.ibb.co/q39xtcCh/6466974d-a5e7-47b7-a5ec-6b8f7787be4e.jpg', marca: 'hugo', desc: 'Hugo Boss Blanco' },
+            { id: 13, img: 'https://i.ibb.co/Y7VbLH00/781c854a-5a9e-4167-929b-3074e2835a61.jpg', marca: 'prada', desc: 'Prada Blanco' },
+            { id: 14, img: 'https://i.ibb.co/ymFKxGYj/43409ec0-cdab-48fa-8b38-f685866ca30f-1.jpg', marca: 'prada', desc: 'Prada Negro' },
+            { id: 15, img: 'https://i.ibb.co/rKgyc4dQ/ed65d0ae-8840-48ae-978b-82bde2b40e82-1.jpg', marca: 'balmain', desc: 'Balmain Negra' },
+            { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        function abrirMenu() { document.getElementById("miMenu").style.width = "250px"; }
-        function cerrarMenu() { document.getElementById("miMenu").style.width = "0"; }
+        function abrirCarpeta(tipo) {
+            const id = tipo === 'menu' ? 'panelMenu' : 'panelCarrito';
+            document.getElementById(id).style.width = "300px";
+        }
+
+        function cerrarCarpeta(tipo) {
+            const id = tipo === 'menu' ? 'panelMenu' : 'panelCarrito';
+            document.getElementById(id).style.width = "0";
+        }
+
+        function agregarAlCarrito(id) {
+            const producto = productos.find(p => p.id === id);
+            carrito.push(producto);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            document.getElementById('contador').innerText = carrito.length;
+            const contenedor = document.getElementById('items-carrito');
+            contenedor.innerHTML = '';
+            
+            let total = 0;
+            carrito.forEach((item, index) => {
+                total += precioUnitario;
+                contenedor.innerHTML += `
+                    <div class="item-carrito">
+                        <img src="${item.img}">
+                        <div>
+                            <div style="font-size:0.8rem">${item.desc}</div>
+                            <div>$89.990</div>
+                            <small onclick="eliminar(${index})" style="color:red; cursor:pointer">Eliminar</small>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('total-precio').innerText = total.toLocaleString('es-CO');
+        }
+
+        function eliminar(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function enviarPedido() {
+            if(carrito.length === 0) return alert("El carrito está vacío");
+            
+            let mensaje = "Hola MDCLTS, quiero comprar:\n";
+            carrito.forEach(item => {
+                mensaje += `- 1x ${item.desc} ($89.990)\n`;
+            });
+            mensaje += `\nTotal: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
+            
+            const url = `https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
 
         function mostrarProductos(lista) {
             const contenedor = document.getElementById('lista-productos');
             contenedor.innerHTML = '';
             lista.forEach(p => {
-                const mensaje = encodeURIComponent(`Hola, me interesa la Camiseta ${p.desc}`);
                 contenedor.innerHTML += `
                     <div class="producto">
-                        <img src="${p.img}" alt="${p.desc}">
+                        <img src="${p.img}">
                         <span class="marca">${p.marca}</span>
+                        <div style="font-size:0.9rem; margin-bottom:5px;">${p.desc}</div>
                         <span class="precio">$89.990</span>
-                        <a href="https://wa.me/${nroWhatsApp}?text=${mensaje}" target="_blank" class="btn-comprar">Comprar ahora</a>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})">Agregar al Carrito</button>
                     </div>
                 `;
             });
         }
 
         function filtrar(marca) {
-            cerrarMenu();
-            if(marca === 'todos') {
-                mostrarProductos(productos);
-            } else {
-                const filtrados = productos.filter(p => p.marca === marca);
-                mostrarProductos(filtrados);
-            }
+            cerrarCarpeta('menu');
+            if(marca === 'todos') mostrarProductos(productos);
+            else mostrarProductos(productos.filter(p => p.marca === marca));
         }
 
-        // Carga inicial
         mostrarProductos(productos);
     </script>
 </body>

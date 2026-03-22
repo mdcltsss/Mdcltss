@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Tienda Oficial</title>
+    <title>MDCLTS - Colección Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -28,16 +28,33 @@
 
         .logo { font-family: var(--fuente-logo); font-size: 2.2rem; margin: 0; cursor: pointer; }
 
-        .iconos-header { display: flex; gap: 20px; align-items: center; }
+        .iconos-header { display: flex; gap: 15px; align-items: center; }
+
+        /* Icono de Regalo */
+        .gift-icon { font-size: 24px; cursor: pointer; background: #fdf2f2; padding: 8px; border-radius: 50%; border: 1px solid #fee2e2; }
 
         .cart-icon { position: relative; cursor: pointer; font-size: 24px; background: #f0f0f0; padding: 8px; border-radius: 50%; }
-
         .cart-count {
-            position: absolute; top: -5px; right: -5px; background: #ff0000;
+            position: absolute; top: -5px; right: -5px; background: #000;
             color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; font-weight: bold;
         }
 
-        .menu-btn { font-size: 28px; cursor: pointer; background: none; border: none; }
+        /* Buscador */
+        .search-container { padding: 20px 5% 0 5%; text-align: center; }
+        #buscador {
+            width: 100%; max-width: 400px; padding: 12px; border-radius: 25px;
+            border: 1px solid #ddd; outline: none; font-size: 0.9rem;
+        }
+
+        /* Modal Regalo */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; padding: 30px; border-radius: 15px; text-align: center;
+            max-width: 300px; width: 90%; position: relative;
+        }
 
         /* Paneles Laterales */
         .panel {
@@ -46,8 +63,7 @@
             box-shadow: -5px 0 15px rgba(0,0,0,0.1);
         }
 
-        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
-        
+        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; font-size: 0.85rem; font-weight: bold; }
         .close-btn { position: absolute; top: 10px; left: 20px; font-size: 30px; cursor: pointer; }
 
         /* Catálogo */
@@ -56,68 +72,53 @@
             gap: 25px; padding: 30px 5%;
         }
 
-        .producto { 
-            background: rgba(255,255,255,0.9); 
-            border: 1px solid #eee; 
-            padding: 15px; 
-            text-align: center; 
-            border-radius: 12px;
-            transition: 0.3s;
-        }
-        
-        .producto:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .producto { background: #fff; border: 1px solid #eee; padding: 15px; text-align: center; border-radius: 12px; }
+        .producto img { width: 100%; border-radius: 8px; }
+        .marca { font-weight: bold; font-size: 0.7rem; text-transform: uppercase; color: #888; display: block; margin-top: 10px; }
+        .desc-prod { font-size: 0.95rem; margin: 5px 0; }
+        .precio { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; display: block; }
 
-        .producto img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
-        
-        .marca { font-weight: bold; font-size: 0.75rem; text-transform: uppercase; color: #888; display: block; }
-        
-        .desc-prod { font-size: 1rem; margin: 5px 0; font-weight: 500; }
+        /* Botones */
+        .btn-directo { background-color: #25d366; color: white; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px; }
+        .btn-carrito { background-color: #000; color: #fff; padding: 10px; border-radius: 6px; width: 100%; border: none; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
-        .precio { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: block; color: #000; }
+        .btn-finalizar { background-color: #000; color: white; text-align: center; padding: 15px; margin: 20px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold; }
 
-        /* Botones de Acción */
-        .botones-accion { display: flex; flex-direction: column; gap: 8px; }
-
-        .btn-directo {
-            background-color: #25d366; color: white; padding: 10px; border-radius: 6px;
-            text-decoration: none; font-weight: bold; font-size: 0.85rem; border: none; cursor: pointer;
-        }
-
-        .btn-carrito {
-            background-color: #000; color: #fff; padding: 10px; border-radius: 6px;
-            border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem;
-        }
-
-        .btn-carrito:hover { background-color: #333; }
-
-        /* Carrito Interior */
-        .item-carrito { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 12px; }
-        .item-carrito img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
-        .total-container { padding: 25px; font-weight: bold; font-size: 1.3rem; border-top: 2px solid #000; margin-top: 10px; }
-        .btn-finalizar {
-            background-color: #000; color: white; text-align: center; padding: 15px;
-            margin: 0 25px 25px 25px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold;
-        }
-
-        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; } }
+        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; } }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="gift-icon" onclick="mostrarRegalo()">🎁</div>
         <h1 class="logo" onclick="location.reload()">MDCLTS</h1>
         <div class="iconos-header">
             <div class="cart-icon" onclick="abrirPanel('panelCarrito')">
                 🛒 <span class="cart-count" id="contador">0</span>
             </div>
-            <button class="menu-btn" onclick="abrirPanel('panelMenu')">&#9776;</button>
+            <div style="font-size: 28px; cursor: pointer;" onclick="abrirPanel('panelMenu')">&#9776;</div>
         </div>
     </header>
 
+    <div class="search-container">
+        <input type="text" id="buscador" placeholder="Busca una marca (Lacoste, Nike, Prada...)" onkeyup="buscar()">
+    </div>
+
+    <div id="modalRegalo" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" style="left: auto; right: 15px; top: 5px;" onclick="cerrarRegalo()">&times;</span>
+            <h3>¡Descuento de Regalo! 🎁</h3>
+            <p style="font-size: 0.9rem;">Ingresa tu correo para recibir un código del 10% en tu primera compra.</p>
+            <input type="email" id="emailRegalo" placeholder="Tu correo aquí" style="width: 80%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;">
+            <button class="btn-carrito" onclick="generarCodigo()">Obtener Código</button>
+            <div id="resultadoCodigo" style="margin-top: 15px; font-weight: bold; color: #d946ef; display: none;"></div>
+        </div>
+    </div>
+
     <div id="panelMenu" class="panel">
         <span class="close-btn" onclick="cerrarPanel('panelMenu')">&times;</span>
-        <h2 style="border-bottom: 1px solid #eee;">Marcas</h2>
-        <a onclick="filtrar('todos')">Todas las Prendas</a>
+        <h2>Marcas</h2>
+        <a onclick="filtrar('todos')">Todas</a>
         <a onclick="filtrar('clemont')">Clemont</a>
         <a onclick="filtrar('lacoste')">Lacoste</a>
         <a onclick="filtrar('essentials')">Essentials</a>
@@ -128,10 +129,10 @@
 
     <div id="panelCarrito" class="panel">
         <span class="close-btn" onclick="cerrarPanel('panelCarrito')">&times;</span>
-        <h2 style="border-bottom: 1px solid #eee;">Tu Carrito</h2>
+        <h2>Tu Pedido</h2>
         <div id="items-carrito"></div>
-        <div class="total-container">Total: $<span id="total-precio">0</span></div>
-        <a href="#" class="btn-finalizar" onclick="enviarPedido()">Finalizar Pedido</a>
+        <div style="padding: 20px; font-weight: bold;">Total: $<span id="total-precio">0</span></div>
+        <a href="#" class="btn-finalizar" onclick="enviarPedido()">Finalizar en WhatsApp</a>
     </div>
 
     <div class="contenedor-productos" id="lista-productos"></div>
@@ -160,78 +161,74 @@
             { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        function abrirPanel(id) { document.getElementById(id).style.width = "320px"; }
+        function abrirPanel(id) { document.getElementById(id).style.width = "300px"; }
         function cerrarPanel(id) { document.getElementById(id).style.width = "0"; }
 
-        function compraDirecta(desc) {
-            const mensaje = encodeURIComponent(`Hola MDCLTS, quiero comprar la Camiseta ${desc} por $89.990`);
-            window.open(`https://wa.me/${nroWhatsApp}?text=${mensaje}`, '_blank');
+        function mostrarRegalo() { document.getElementById('modalRegalo').style.display = 'flex'; }
+        function cerrarRegalo() { document.getElementById('modalRegalo').style.display = 'none'; }
+
+        function generarCodigo() {
+            const email = document.getElementById('emailRegalo').value;
+            if(!email.includes('@')) return alert("Ingresa un correo válido");
+            const codigo = "MDCLTS-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('resultadoCodigo').innerText = "Tu Código: " + codigo;
+            document.getElementById('resultadoCodigo').style.display = 'block';
         }
 
-        function agregarAlCarrito(id) {
-            const producto = productos.find(p => p.id === id);
-            carrito.push(producto);
-            actualizarCarrito();
-            abrirPanel('panelCarrito');
-        }
-
-        function actualizarCarrito() {
-            document.getElementById('contador').innerText = carrito.length;
-            const contenedor = document.getElementById('items-carrito');
-            contenedor.innerHTML = '';
-            let total = 0;
-            carrito.forEach((item, index) => {
-                total += precioUnitario;
-                contenedor.innerHTML += `
-                    <div class="item-carrito">
-                        <img src="${item.img}">
-                        <div>
-                            <div style="font-size:0.85rem; font-weight:bold;">${item.desc}</div>
-                            <div style="font-size:0.8rem;">$89.990</div>
-                            <small onclick="eliminar(${index})" style="color:red; cursor:pointer; text-decoration:underline;">Quitar</small>
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('total-precio').innerText = total.toLocaleString('es-CO');
-        }
-
-        function eliminar(index) {
-            carrito.splice(index, 1);
-            actualizarCarrito();
-        }
-
-        function enviarPedido() {
-            if(carrito.length === 0) return alert("Tu carrito está vacío");
-            let mensaje = "Hola MDCLTS, me interesan estas prendas:\n\n";
-            carrito.forEach(item => { mensaje += `• 1x ${item.desc} ($89.990)\n`; });
-            mensaje += `\n*TOTAL A PAGAR: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}*`;
-            window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        function buscar() {
+            const texto = document.getElementById('buscador').value.toLowerCase();
+            const filtrados = productos.filter(p => p.marca.toLowerCase().includes(texto) || p.desc.toLowerCase().includes(texto));
+            mostrarProductos(filtrados);
         }
 
         function mostrarProductos(lista) {
             const contenedor = document.getElementById('lista-productos');
             contenedor.innerHTML = '';
             lista.forEach(p => {
+                const linkWA = `https://wa.me/${nroWhatsApp}?text=Hola, quiero la Camiseta ${p.desc} ($89.990)`;
                 contenedor.innerHTML += `
                     <div class="producto">
                         <img src="${p.img}">
                         <span class="marca">${p.marca}</span>
                         <div class="desc-prod">${p.desc}</div>
                         <span class="precio">$89.990</span>
-                        <div class="botones-accion">
-                            <button class="btn-directo" onclick="compraDirecta('${p.desc}')">WhatsApp (Compra Rápida)</button>
-                            <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">Añadir al Carrito</button>
-                        </div>
+                        <a href="${linkWA}" target="_blank" class="btn-directo">Compra Rápida</a>
+                        <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">🛒 Agregar al Carrito</button>
                     </div>
                 `;
             });
         }
 
+        function agregarAlCarrito(id) {
+            carrito.push(productos.find(p => p.id === id));
+            actualizarCarrito();
+            abrirPanel('panelCarrito');
+        }
+
+        function actualizarCarrito() {
+            document.getElementById('contador').innerText = carrito.length;
+            const itemsCont = document.getElementById('items-carrito');
+            itemsCont.innerHTML = '';
+            let total = 0;
+            carrito.forEach((item, index) => {
+                total += precioUnitario;
+                itemsCont.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; font-size:0.8rem;">${item.desc} - $89.990 <small onclick="eliminar(${index})" style="color:red; cursor:pointer">X</small></div>`;
+            });
+            document.getElementById('total-precio').innerText = total.toLocaleString('es-CO');
+        }
+
+        function eliminar(idx) { carrito.splice(idx, 1); actualizarCarrito(); }
+
+        function enviarPedido() {
+            let msg = "Hola MDCLTS, mi pedido:\n";
+            carrito.forEach(i => msg += `- ${i.desc}\n`);
+            msg += `Total: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
+            window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         function filtrar(marca) {
             cerrarPanel('panelMenu');
-            if(marca === 'todos') mostrarProductos(productos);
-            else mostrarProductos(productos.filter(p => p.marca === marca));
+            mostrarProductos(marca === 'todos' ? productos : productos.filter(p => p.marca === marca));
         }
 
         mostrarProductos(productos);

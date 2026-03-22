@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDCLTS - Carrito de Compras</title>
+    <title>MDCLTS - Tienda Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,60 +22,84 @@
 
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; position: sticky; top: 0; background: rgba(255,255,255,0.95); z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 15px 5%; position: sticky; top: 0; background: rgba(255,255,255,0.98); z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .logo { font-family: var(--fuente-logo); font-size: 2.2rem; margin: 0; cursor: pointer; }
 
         .iconos-header { display: flex; gap: 20px; align-items: center; }
 
-        .cart-icon { position: relative; cursor: pointer; font-size: 24px; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 24px; background: #f0f0f0; padding: 8px; border-radius: 50%; }
 
         .cart-count {
-            position: absolute; top: -10px; right: -10px; background: red;
-            color: white; font-size: 12px; padding: 2px 6px; border-radius: 50%;
+            position: absolute; top: -5px; right: -5px; background: #ff0000;
+            color: white; font-size: 11px; padding: 2px 6px; border-radius: 50%; font-weight: bold;
         }
 
         .menu-btn { font-size: 28px; cursor: pointer; background: none; border: none; }
 
-        /* Menú Lateral y Carrito Lateral */
+        /* Paneles Laterales */
         .panel {
             height: 100%; width: 0; position: fixed; z-index: 1001; top: 0; right: 0;
             background-color: #fff; overflow-x: hidden; transition: 0.4s; padding-top: 60px;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
         }
 
-        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; }
+        .panel a, .panel h2 { padding: 15px 25px; text-decoration: none; color: #000; display: block; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
         
         .close-btn { position: absolute; top: 10px; left: 20px; font-size: 30px; cursor: pointer; }
 
         /* Catálogo */
         .contenedor-productos {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px; padding: 30px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px; padding: 30px 5%;
         }
 
-        .producto { background: #fff; border: 1px solid #eee; padding: 15px; text-align: center; border-radius: 8px; }
-        .producto img { width: 100%; border-radius: 5px; margin-bottom: 10px; }
-        .marca { font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #666; }
-        .precio { font-size: 1.1rem; font-weight: 700; margin: 8px 0; display: block; }
+        .producto { 
+            background: rgba(255,255,255,0.9); 
+            border: 1px solid #eee; 
+            padding: 15px; 
+            text-align: center; 
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+        
+        .producto:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        .btn-agregar {
-            background-color: #000; color: #fff; padding: 10px; width: 100%;
-            border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+        .producto img { width: 100%; border-radius: 8px; margin-bottom: 12px; }
+        
+        .marca { font-weight: bold; font-size: 0.75rem; text-transform: uppercase; color: #888; display: block; }
+        
+        .desc-prod { font-size: 1rem; margin: 5px 0; font-weight: 500; }
+
+        .precio { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: block; color: #000; }
+
+        /* Botones de Acción */
+        .botones-accion { display: flex; flex-direction: column; gap: 8px; }
+
+        .btn-directo {
+            background-color: #25d366; color: white; padding: 10px; border-radius: 6px;
+            text-decoration: none; font-weight: bold; font-size: 0.85rem; border: none; cursor: pointer;
         }
 
-        /* Estilos del Carrito */
-        .item-carrito { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 10px; }
-        .item-carrito img { width: 50px; height: 50px; object-fit: cover; }
-        .total-container { padding: 20px; font-weight: bold; font-size: 1.2rem; }
-        .btn-whatsapp-final {
-            background-color: #25d366; color: white; text-align: center; padding: 15px;
-            margin: 20px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold;
+        .btn-carrito {
+            background-color: #000; color: #fff; padding: 10px; border-radius: 6px;
+            border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem;
         }
 
-        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+        .btn-carrito:hover { background-color: #333; }
+
+        /* Carrito Interior */
+        .item-carrito { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 12px; }
+        .item-carrito img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .total-container { padding: 25px; font-weight: bold; font-size: 1.3rem; border-top: 2px solid #000; margin-top: 10px; }
+        .btn-finalizar {
+            background-color: #000; color: white; text-align: center; padding: 15px;
+            margin: 0 25px 25px 25px; border-radius: 8px; text-decoration: none; display: block; font-weight: bold;
+        }
+
+        @media (max-width: 600px) { .contenedor-productos { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; } }
     </style>
 </head>
 <body>
@@ -83,17 +107,17 @@
     <header>
         <h1 class="logo" onclick="location.reload()">MDCLTS</h1>
         <div class="iconos-header">
-            <div class="cart-icon" onclick="abrirCarpeta('carrito')">
+            <div class="cart-icon" onclick="abrirPanel('panelCarrito')">
                 🛒 <span class="cart-count" id="contador">0</span>
             </div>
-            <button class="menu-btn" onclick="abrirCarpeta('menu')">&#9776;</button>
+            <button class="menu-btn" onclick="abrirPanel('panelMenu')">&#9776;</button>
         </div>
     </header>
 
     <div id="panelMenu" class="panel">
-        <span class="close-btn" onclick="cerrarCarpeta('menu')">&times;</span>
-        <h2 style="font-size: 1rem;">Marcas</h2>
-        <a onclick="filtrar('todos')">Ver Todo</a>
+        <span class="close-btn" onclick="cerrarPanel('panelMenu')">&times;</span>
+        <h2 style="border-bottom: 1px solid #eee;">Marcas</h2>
+        <a onclick="filtrar('todos')">Todas las Prendas</a>
         <a onclick="filtrar('clemont')">Clemont</a>
         <a onclick="filtrar('lacoste')">Lacoste</a>
         <a onclick="filtrar('essentials')">Essentials</a>
@@ -103,11 +127,11 @@
     </div>
 
     <div id="panelCarrito" class="panel">
-        <span class="close-btn" onclick="cerrarCarpeta('carrito')">&times;</span>
-        <h2>Tu Pedido</h2>
+        <span class="close-btn" onclick="cerrarPanel('panelCarrito')">&times;</span>
+        <h2 style="border-bottom: 1px solid #eee;">Tu Carrito</h2>
         <div id="items-carrito"></div>
         <div class="total-container">Total: $<span id="total-precio">0</span></div>
-        <a href="#" id="enviar-wa" class="btn-whatsapp-final" onclick="enviarPedido()">Pedir por WhatsApp</a>
+        <a href="#" class="btn-finalizar" onclick="enviarPedido()">Finalizar Pedido</a>
     </div>
 
     <div class="contenedor-productos" id="lista-productos"></div>
@@ -136,27 +160,25 @@
             { id: 16, img: 'https://i.ibb.co/99wHLchB/88ba4f1b-0b96-4dd7-b7f3-70125cd74c0b-1.jpg', marca: 'nike', desc: 'Nike Azul' }
         ];
 
-        function abrirCarpeta(tipo) {
-            const id = tipo === 'menu' ? 'panelMenu' : 'panelCarrito';
-            document.getElementById(id).style.width = "300px";
-        }
+        function abrirPanel(id) { document.getElementById(id).style.width = "320px"; }
+        function cerrarPanel(id) { document.getElementById(id).style.width = "0"; }
 
-        function cerrarCarpeta(tipo) {
-            const id = tipo === 'menu' ? 'panelMenu' : 'panelCarrito';
-            document.getElementById(id).style.width = "0";
+        function compraDirecta(desc) {
+            const mensaje = encodeURIComponent(`Hola MDCLTS, quiero comprar la Camiseta ${desc} por $89.990`);
+            window.open(`https://wa.me/${nroWhatsApp}?text=${mensaje}`, '_blank');
         }
 
         function agregarAlCarrito(id) {
             const producto = productos.find(p => p.id === id);
             carrito.push(producto);
             actualizarCarrito();
+            abrirPanel('panelCarrito');
         }
 
         function actualizarCarrito() {
             document.getElementById('contador').innerText = carrito.length;
             const contenedor = document.getElementById('items-carrito');
             contenedor.innerHTML = '';
-            
             let total = 0;
             carrito.forEach((item, index) => {
                 total += precioUnitario;
@@ -164,9 +186,9 @@
                     <div class="item-carrito">
                         <img src="${item.img}">
                         <div>
-                            <div style="font-size:0.8rem">${item.desc}</div>
-                            <div>$89.990</div>
-                            <small onclick="eliminar(${index})" style="color:red; cursor:pointer">Eliminar</small>
+                            <div style="font-size:0.85rem; font-weight:bold;">${item.desc}</div>
+                            <div style="font-size:0.8rem;">$89.990</div>
+                            <small onclick="eliminar(${index})" style="color:red; cursor:pointer; text-decoration:underline;">Quitar</small>
                         </div>
                     </div>
                 `;
@@ -180,16 +202,11 @@
         }
 
         function enviarPedido() {
-            if(carrito.length === 0) return alert("El carrito está vacío");
-            
-            let mensaje = "Hola MDCLTS, quiero comprar:\n";
-            carrito.forEach(item => {
-                mensaje += `- 1x ${item.desc} ($89.990)\n`;
-            });
-            mensaje += `\nTotal: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}`;
-            
-            const url = `https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
+            if(carrito.length === 0) return alert("Tu carrito está vacío");
+            let mensaje = "Hola MDCLTS, me interesan estas prendas:\n\n";
+            carrito.forEach(item => { mensaje += `• 1x ${item.desc} ($89.990)\n`; });
+            mensaje += `\n*TOTAL A PAGAR: $${(carrito.length * precioUnitario).toLocaleString('es-CO')}*`;
+            window.open(`https://wa.me/${nroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
 
         function mostrarProductos(lista) {
@@ -200,16 +217,19 @@
                     <div class="producto">
                         <img src="${p.img}">
                         <span class="marca">${p.marca}</span>
-                        <div style="font-size:0.9rem; margin-bottom:5px;">${p.desc}</div>
+                        <div class="desc-prod">${p.desc}</div>
                         <span class="precio">$89.990</span>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})">Agregar al Carrito</button>
+                        <div class="botones-accion">
+                            <button class="btn-directo" onclick="compraDirecta('${p.desc}')">WhatsApp (Compra Rápida)</button>
+                            <button class="btn-carrito" onclick="agregarAlCarrito(${p.id})">Añadir al Carrito</button>
+                        </div>
                     </div>
                 `;
             });
         }
 
         function filtrar(marca) {
-            cerrarCarpeta('menu');
+            cerrarPanel('panelMenu');
             if(marca === 'todos') mostrarProductos(productos);
             else mostrarProductos(productos.filter(p => p.marca === marca));
         }
